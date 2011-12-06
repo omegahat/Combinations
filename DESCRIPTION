@@ -1,0 +1,18 @@
+Package: Combinations
+Version: 0.2-1
+Title: Compute the combinations of choosing r items from n elements.
+Description:  Generates the combinations for choosing r items from a set of n items.
+  When n gets large, the package provides a mechanism for dealing with each combination
+  as it is generated so that one does not have to hold the entire collection around
+  and operate on them after creating the entire collection.
+  This makes computations feasible for very large numbers of combinations. It does not 
+  necessarily make them fast!
+  The package is also a good example of the basics of calling R functions from C code.
+  It also illustrates aspects of adapting code for a stand-alone application to be used within
+  an interactive language like R/S-Plus, Python, Perl or Matlab/Octave.
+Author: Duncan Temple Lang <duncan@wald.ucdavis.edu>
+Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
+Depends: methods
+License: BSD
+LazyLoad: yes
+

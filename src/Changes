@@ -1,0 +1,91 @@
+diff --ignore-all-space comb_chase.c Combinations/src/combinations.c 
+
+include R_ext/Memory.h for S_alloc()
+
+Change name of routine from main() to R_combinations.
+
+Add N to local variables.
+  N is the total number of combinations.
+
+Remove the input of n and k
+
+Change the malloc() to S_alloc() so that the memory is freed up
+when the routine returns, either normally or abnormally (e.g. Ctrl-C).
+
+Change the first section of the loop that outputs the current
+combination to one that stores its values in the 
+matrix.
+
+Changed the return value type to void so the return 0 goes to
+return.
+
+Change calls to exit() to return or errorcall().
+
+
+
+The actual diff is:
+
+diff --ignore-all-space comb_chase.c Combinations/src/combinations.c 
+
+2c2,4
+< /* C implementation by Glenn C. Rhoads */
+---
+> /* C implementation by Glenn C. Rhoads 
+>    Adapted for R by Duncan Temple Lang.
+> */
+8a11,12
+> #define R
+> #include <R_ext/Memory.h>
+10c14,18
+< int main( void )
+---
+> 
+> #define OUTPUT(ctr, i, val)  { if(val != 0) { ans[ *k * ]}
+> #define END_ITEM(ctr) ctr++
+> 
+> void R_combinations(int *inputs, int *ans)
+12c20
+<    int i, k, n, r, *a, *w;
+---
+>    int i, n, k, N, r, *a, *w;
+14,15c22,25
+<    printf( "Enter n k: " );
+<    scanf( "%d %d", &n, &k );
+---
+>     int ctr = 0;
+>     n = inputs[0];
+>     k = inputs[1];
+>     N = inputs[2];
+17,18c27,28
+<    a = malloc( n * sizeof( int ) );
+<    w = malloc( (n+1) * sizeof( int ) );
+---
+>    a = (int *) S_alloc( n, sizeof( int ) );
+>    w = (int *) S_alloc( (n+1), sizeof( int ) );
+29c39,50
+<       for (i = n-1; i >= 0; i--) printf( "%3d", a[i] );
+---
+>         int col = 0;
+> 	for (i = n - 1; i >= 0; i--) 
+> #ifdef R 
+> 	{
+> 	    if(a[i] != 0) {
+>                 ans[ col + ctr] = i + 1;
+>                 col += N;
+> 	    }
+> 	}
+> 	ctr++;
+> #else
+> 	printf( "%3d", a[i] );
+30a52
+> #endif
+33c55
+<       if (i == n) exit(0);
+---
+> 	if (i == n) return;
+74c96
+<    return 0;
+---
+>     return;
+75a98
+> 

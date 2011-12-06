@@ -1,0 +1,11 @@
+AC_INIT(index.html.in)
+
+DESC=../DESCRIPTION
+
+PKG_NAME=`cat $DESC | grep Package | sed -e 's/.*: //'`
+VERSION=`cat $DESC | grep Version | sed -e 's/.*: //'`
+
+AC_SUBST(PKG_NAME)
+AC_SUBST(VERSION)
+
+AC_OUTPUT(index.html)

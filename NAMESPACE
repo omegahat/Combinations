@@ -1,0 +1,9 @@
+useDynLib(Combinations)
+export(combinations, permutations)
+
+exportClasses("CallbackFunction", "CombinationGeneratorCallback")
+
+exportMethods("$", "names") 
+
+
+
